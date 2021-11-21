@@ -1,9 +1,9 @@
 [package]
+authors = ["Sam Grimee"]
 edition = "2021"
+license = "MIT"
 name = "print-time"
 version = "0.1.0"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 chrono = "0.4"
