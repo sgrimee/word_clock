@@ -1,3 +1,6 @@
+//! This crate converts a time given in hour, minute, am/pm into either a full-sentence repesentation,
+//! or a list of leds that need to be lit on a word-clock.
+
 #[warn(missing_docs)]
 #[derive(Debug, PartialEq)]
 enum Token {
@@ -28,6 +31,7 @@ enum Token {
     MinuteHalfFem,
 }
 
+// French language implementation
 impl Token {
     fn to_tuple(&self) -> (&str, Vec<u32>) {
         match self {
@@ -70,6 +74,7 @@ impl Token {
 
 /// Return a vector with the Tokens needed to display time.
 /// Panics if minute >= 60 or hour >=12
+/// French language implementation.
 fn tokens_for_time(is_pm: bool, hour: u32, minute: u32) -> Vec<Token> {
     assert!(minute < 60 && hour < 12);
     // round to 5 minutes
