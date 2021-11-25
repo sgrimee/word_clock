@@ -1,0 +1,13 @@
+[package]
+edition = "2021"
+name = "led-time"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+apa102-spi = "0.3"
+chrono = "0.4"
+rppal = {version = "0.13", features = ["hal"]}
+smart-leds = "0.3"
+word_clock_fr = {path = "../word_clock_fr"}

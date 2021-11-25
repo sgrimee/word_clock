@@ -1,9 +1,9 @@
 //! This crate converts a time given in hour, minute, am/pm into either a full-sentence repesentation,
 //! or a list of leds that need to be lit on a word-clock.
 
-#[warn(missing_docs)]
+// #[warn(missing_docs)]
 #[derive(Debug, PartialEq)]
-enum Token {
+pub enum Token {
     Opening,
     HourTwo,
     HourFour,
@@ -35,39 +35,40 @@ enum Token {
 impl Token {
     fn to_tuple(&self) -> (&str, Vec<u32>) {
         match self {
-            Token::Opening => ("IL EST", (0u32..=1).collect()),
-            Token::HourTwo => ("DEUX", vec![2]),
-            Token::HourFour => ("QUATRE", vec![3]),
-            Token::HourThree => ("TROIS", vec![4]),
-            Token::HourNine => ("NEUF", vec![5]),
-            Token::HourOne => ("UNE", vec![6]),
-            Token::HourSeven => ("SEPT", vec![7]),
-            Token::HourEight => ("HUIT", vec![8]),
-            Token::HourSix => ("SIX", vec![9]),
-            Token::HourFive => ("CINQ", vec![10]),
-            Token::HourNoon => ("MIDI", vec![11]),
-            Token::HourTen => ("DIX", vec![12]),
-            Token::HourMidnight => ("MINUIT", vec![13]),
-            Token::HourEleven => ("ONZE", vec![14]),
-            Token::HourSeparatorSingular => ("HEURE", vec![15]),
-            Token::HourSeparatorPlural => ("HEURES", vec![16]),
-            Token::MinuteMinus => ("MOINS", vec![17]),
-            Token::MinuteThe => ("LE", vec![18]),
-            Token::MinuteTen => ("DIX", vec![19]),
-            Token::MinuteAnd => ("ET", vec![20]),
-            Token::MinuteQuarter => ("QUART", vec![21]),
-            Token::MinuteTwenty => ("VINGT", vec![22]),
-            Token::MinuteFive => ("CINQ", vec![23]),
-            Token::MinuteHalfMasc => ("DEMI", vec![24]),
-            Token::MinuteHalfFem => ("DEMIE", vec![25]),
+            // Token::Opening => ("IL EST", (0u32..=1).collect()),
+            Token::Opening => ("IL EST", vec![0, 2, 3, 4]),
+            Token::HourTwo => ("DEUX", vec![5, 6, 7, 8]),
+            Token::HourFour => ("QUATRE", vec![9, 10, 11, 12]),
+            Token::HourThree => ("TROIS", vec![13, 14, 15, 16]),
+            Token::HourNine => ("NEUF", vec![17, 18, 19]),
+            Token::HourOne => ("UNE", vec![20, 21]),
+            Token::HourSeven => ("SEPT", vec![22, 23, 24]),
+            Token::HourEight => ("HUIT", vec![26, 27]),
+            Token::HourSix => ("SIX", vec![28, 29]),
+            Token::HourFive => ("CINQ", vec![30, 31, 32]),
+            Token::HourNoon => ("MIDI", vec![33, 34]),
+            Token::HourTen => ("DIX", vec![34, 35]),
+            Token::HourMidnight => ("MINUIT", vec![36, 37, 38, 39]),
+            Token::HourEleven => ("ONZE", vec![40, 41, 42]),
+            Token::HourSeparatorSingular => ("HEURE", vec![43, 44, 45, 46, 47]),
+            Token::HourSeparatorPlural => ("HEURES", vec![43, 44, 45, 46, 47, 48]),
+            Token::MinuteMinus => ("MOINS", vec![49, 50, 51, 52]),
+            Token::MinuteThe => ("LE", vec![53, 54]),
+            Token::MinuteTen => ("DIX", vec![55, 56]),
+            Token::MinuteAnd => ("ET", vec![57, 58]),
+            Token::MinuteQuarter => ("QUART", vec![59, 60, 61, 63]),
+            Token::MinuteTwenty => ("VINGT", vec![63, 64, 65]),
+            Token::MinuteFive => ("CINQ", vec![66, 67, 68]),
+            Token::MinuteHalfMasc => ("DEMI", vec![69, 70]),
+            Token::MinuteHalfFem => ("DEMIE", vec![69, 70, 71]),
         }
     }
 
-    fn to_str(&self) -> &str {
+    pub fn to_str(&self) -> &str {
         self.to_tuple().0
     }
 
-    fn to_leds(&self) -> Vec<u32> {
+    pub fn to_leds(&self) -> Vec<u32> {
         self.to_tuple().1
     }
 }
@@ -75,7 +76,7 @@ impl Token {
 /// Return a vector with the Tokens needed to display time.
 /// Panics if minute >= 60 or hour >=12
 /// French language implementation.
-fn tokens_for_time(is_pm: bool, hour: u32, minute: u32) -> Vec<Token> {
+pub fn tokens_for_time(is_pm: bool, hour: u32, minute: u32) -> Vec<Token> {
     assert!(minute < 60 && hour < 12);
     // round to 5 minutes
     let minute = minute - (minute % 5);
